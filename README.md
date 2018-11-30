@@ -8,3 +8,5 @@ The codes used for each dataset are organized in the respective folders, which h
 3. ModelTest: that includes the codes for testing the performance of the models in the "Models" folder.
 
 Details of the codes are illustrated in the readme file available under each dataset folder. 
+
+Due to space limit, we provide a toy dataset in */VireoFood-172/data. It contains the first 32 examples in all of our input files. We hope they help the readers to know the data format of the inputs and easily apply our codes to their own problems. 
