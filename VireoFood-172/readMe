@@ -1,0 +1,75 @@
+1. Statistics:
+Whole data: 110,241
+TR: 66071
+TE: 33154
+VAL:11016
+
+Ingredient: 353 ingredients - 309 words distinct words - 286 words have glove representation  
+
+
+2. data files (in */SplitAndIngreLabel)
+ingredient_train(val/test)_feature.mat (correct version available in server side only): contains a matrix of (66071/11016/33154,353), indicating the ingredient representation of train/val/test data
+
+wordIndicator_train(val/test).mat: contains a matrix of (66071/11016/33154,309), indicating the word representation of train/val/test data
+
+wordVector.mat: contains a matrix of (309,300), mapping 309 individual words to glove space 
+
+indexVector_train(test).mat: contains a matrix of (77087/33154,30) (range from 1-309 to fit the requirement of Embedding layer that needs a zero vector on the top), is the input to ingredient channel (to fit the embedding layer of gru encoder), storing the index of words for individual food, with a maximum number of 30 (padding with zeros for entries without words).
+
+indexVector_test.mat: the original indexes of words in wordIndicator_test.mat
+
+
+
+
+3. important py files
+
+
+3.1. Model Test
+imgModelTest2.py: latest version for testing model performance on pure image classification
+ModelTest-imgrecon.py: to display the reconstructed images
+ModelTest-lstm.py: to test the performance of lstm word prediction only.
+ModelTest-img2tag.py: generate ingredients with image input
+ModelTest-tag2img.py: generate image with ingredients input
+
+
+
+
+3.2. Model files
+
+3.2.1. Vgg + nn
+vgg-multimodal.py: the two channel model with ingredient channel represented by individual ingredient words, not lstm yet
+
+
+3.2.2. Vgg + gru
+
+vgg-lstm-bi-final.py: vgg + a complicated gru decoding network
+
+final_vgg-lstm.py:the improved simplified version of the above trials, with simplified lstm decoder, without AE, cross channel and image reconstruction. We further modify it to only train image channel.
+
+final-vgg-lstm2-2.py: beyond final_vgg-lstm2.py, based on final_vgg-lstm.py, specially to train text channel, add constraints to embedding match for gru decoders, using both y_latent and prev_hidden of last lstm (fused with a non-linear mapping) to produce the input for current lstm. 
+
+final-vgg-lstm3-finetune.py: for img2tag generation by learning a cross channel mapping. freeze image channel and encoder_t, allow fine-tune on decoder_t.
+
+final-vgg-lstm4.py: for the tag2img task. keeping the learned encoder&vgg layers, encoder_t, decoder_t. 
+
+final-vgg-lstm5.py: learns an effective image recon network with l2_loss, feature loss, and gan loss
+
+
+
+3.2.3. resnet + nn
+
+final-resnet-ingre-step1.py: Train an image encoding-decoding network to obtain a latent vector of imgs.
+
+final-resnet-ingre-step2.py: Train an ingredient encoding-decoding network to obtain a latent vector of ingredients.
+
+
+final-resnet-ingre-step3-2.py: train the joint classification model. It is a combination of steps 1 and 2. freeze the learned img and ingredient channels, and learn the heterogeneous transfer layers.
+
+final-resnet-ingre-step4.py: perform tag2img task using trained model trained using final-resnet-ingre-step3-2.py. img decoder finetuned with l2, feature, and gan loss.
+
+
+3.2.4. resnet + gru
+final-resnet-gru-step1: train image and ingredient channels independently
+final-resnet-gru-step2: free the image and ingredient channels, train the partial heterogeneous transfer mappings
+final-resnet-gru-step3: free the image and ingredient channels, remove the classification network, train the cross-channel generation mappings.
+
