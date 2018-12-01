@@ -1,6 +1,6 @@
 # FoodRecog
 
-This project contains our codes for experiments on two datasets, i.e. VireoFood-172 and Food101 datasets. 
+This project contains our codes for experiments on two datasets, i.e. VireoFood-172 and Food101 datasets. All codes are in Python3 language with networks implemented using Pytorch packages. They are tested on Ubuntu 16.04 with Cuda 8.0.
 
 The codes used for each dataset are organized in the respective folders, which has three categories:
 1. TextProcessing: that processes the ingredient text of the dataset to produce the data as input to our ingredient channel.
