@@ -5,12 +5,6 @@ import numpy as np
 import re
 
 # —Path settings———————————————————————————————————————————————————————————————————————————————————————————————————————
-# root_path = '/home/lily/Desktop/food/'  # /home/lily/Desktop/food/ /Users/lei/PycharmProjects/FoodRecog/ /mnt/FoodRecog/
-# file_path = os.path.join(root_path, 'SplitAndIngreLabel/origin_data/')
-# te = os.path.join(root_path, 'SplitAndIngreLabel/')
-
-
-#ingre2word_map = matio.loadmat(file_path + 'ingre2word_map.mat')['ingre2word_map']
 
 with open('ingredients_simplified.txt', 'r', encoding="utf8") as f:
     ingre_list = f.read().split('\n')[:-1]
